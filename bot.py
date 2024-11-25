@@ -156,6 +156,18 @@ class LFGSniper:
 				
 				return "white_check_mark"
 
+			case "checkban":
+				headers = {
+					"Authorization": self.token
+				}
+
+				res = requests.get("https://discord.com/api/v9/users/@me/guilds", headers=headers)
+
+				if any([i["id"] == "253581140072464384" for i in res.json()]):
+					return "green_circle"
+
+				return "red_circle"
+
 			case "hitlist":
 				requests.post(cmd_channels[msg["channel_id"]], json=self.get_hitlist(None))
 
@@ -193,7 +205,7 @@ class LFGSniper:
 				for i in cmd_channels.values():
 					requests.post(i, json=embed_json)
 
-				return "white_check_mark"
+				return None
 
 			case _:
 				return "grey_question"
