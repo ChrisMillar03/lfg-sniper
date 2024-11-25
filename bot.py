@@ -171,7 +171,7 @@ class LFGSniper:
 			case "hitlist":
 				requests.post(cmd_channels[msg["channel_id"]], json=self.get_hitlist(None))
 
-				return "white_check_mark"
+				return None
 
 			case "ping":
 				return "zzz"
