@@ -59,11 +59,19 @@ class LFGSniper:
 		self.db.commit()
 
 	def send_reaction(self, channel, message, reaction):
-		headers = {
-			"Authorization": self.token
+		if not cmd_channels[channel]:
+			return
+
+		embed_json = {
+			"content": f":{reaction}:",
+			"embeds": None,
+			"attachments": []
 		}
 
-		return requests.put(f"https://discord.com/api/v10/channels/{channel}/messages/{message}/reactions/{reactions[reaction]}/@me?location=Message&type=0", headers=headers)
+		requests.post(cmd_channels[channel], embed_json)
+
+		# headers = { "Authorization": self.token }
+		# return requests.put(f"https://discord.com/api/v10/channels/{channel}/messages/{message}/reactions/{reactions[reaction]}/@me?location=Message&type=0", headers=headers)
 
 	def get_hitlist(self, search_ids):
 		targets = [i for i in self.get_targets() if not search_ids or i[0] in search_ids]
